@@ -17,9 +17,8 @@ public class Laboratorio6 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int size = Integer.valueOf(JOptionPane.showInputDialog("Ingrese el numero de empleados: "));
         
-        
+        new Principal().setVisible(true);
     }
     
 }
