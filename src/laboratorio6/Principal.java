@@ -39,12 +39,13 @@ public class Principal extends javax.swing.JFrame {
         this.count = 0;
     }
     
-    
+    public int limite;
     public void SizeArr(){
         int size = Integer.valueOf(JOptionPane.showInputDialog("Ingrese el numero de empleados: "));
         if(size >= 3 && size <= 8)
         {
             this.employees = new Employee[size];
+            limite = size;
         }
         else
         {
@@ -220,7 +221,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        if(this.count > this.employees.length){
+        System.out.println(limite);
+        if(this.count < limite){
             String name = JOptionPane.showInputDialog("Ingrese el nombre del vendedor: ");
             String apellido = JOptionPane.showInputDialog("Ingrese el apellido del vendedor");
             int num = Integer.valueOf(JOptionPane.showInputDialog("Ingrese cantidad de articulos: "));
@@ -235,25 +237,26 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    public int getEmployee(String name){
-        for(int i = 0; i < this.employees.length; i++){
-            if(this.employees[i].nombre == null ? name == null : this.employees[i].nombre.equals(name)){
-                return i;
+    public Employee getEmployee(String name){
+        for(int i = 0; i < this.count; i++){
+            if(this.employees[i].nombre.equals(name)){
+                return this.employees[i];
             }
         }
-        return -1;
+        return null;
     }
     
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String name = JOptionPane.showInputDialog("Ingrese el nombre del vendedor a buscar: ");
-        int emp = this.getEmployee(name);
-        if(emp != -1)
+        Employee emp = this.getEmployee(name);
+        System.out.println(emp);
+        if(emp != null)
         {
             Info in = new Info();
             in.setT("Vendedor Encontrado");
-            in.setData(this.employees[emp]);
+            in.setData(emp);
             in.setVisible(true);
         }
         else
@@ -306,7 +309,7 @@ public class Principal extends javax.swing.JFrame {
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        int emp = this.getMayor();
+        int emp = this.getMenor();
         Info in = new Info();
         in.setT("Vendedor con Menor Ingreso");
         in.setData(this.employees[emp]);
@@ -321,11 +324,13 @@ public class Principal extends javax.swing.JFrame {
         this.count = 0;
         DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
         model.setRowCount(0);
+        this.count = 0;
     }
     
     
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        this.ClearArr();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
