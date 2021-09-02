@@ -87,20 +87,40 @@ public class Principal extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(0, 102, 204));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Vendedor con Mayor ingreso");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(0, 102, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Busqueda");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(0, 102, 255));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Vendedor con menor ingreso");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(0, 102, 255));
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Limpiar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(0, 102, 255));
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -116,6 +136,11 @@ public class Principal extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Salir");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -195,13 +220,118 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        String name = JOptionPane.showInputDialog("Ingrese el nombre del vendedor: ");
-        String apellido = JOptionPane.showInputDialog("Ingrese el apellido del vendedor");
-        int num = Integer.valueOf(JOptionPane.showInputDialog("Ingrese cantidad de articulos: "));
-        this.employees[this.count] = new Employee(name, apellido, num);
-        this.count++;
-        this.FillTable();
+        if(this.count > this.employees.length){
+            String name = JOptionPane.showInputDialog("Ingrese el nombre del vendedor: ");
+            String apellido = JOptionPane.showInputDialog("Ingrese el apellido del vendedor");
+            int num = Integer.valueOf(JOptionPane.showInputDialog("Ingrese cantidad de articulos: "));
+            this.employees[this.count] = new Employee(name, apellido, num);
+            this.count++;
+            this.FillTable();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Ya no puede ingresar mas vendedores, limpie primero para poder insertar mas!");
+        }
+        
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    public int getEmployee(String name){
+        for(int i = 0; i < this.employees.length; i++){
+            if(this.employees[i].nombre == null ? name == null : this.employees[i].nombre.equals(name)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String name = JOptionPane.showInputDialog("Ingrese el nombre del vendedor a buscar: ");
+        int emp = this.getEmployee(name);
+        if(emp != -1)
+        {
+            Info in = new Info();
+            in.setT("Vendedor Encontrado");
+            in.setData(this.employees[emp]);
+            in.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Vendedor no encontrado, ingrese de nuevo el nombre");
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    
+    public int getMayor(){
+        double mayor = 0;
+        int c = 0;
+        for(int i = 0; i < this.count; i++){
+            if(this.employees[i].sueldo > mayor){
+                mayor = this.employees[i].sueldo;
+                c = i;
+            }
+        }
+        return c;
+    }
+    
+    public int getMenor(){
+        double menor = 0;
+        int c = 0;
+        for(int i = 0; i < this.count; i++){
+            if(this.employees[i].sueldo < menor){
+                menor = this.employees[i].sueldo;
+                c = i;
+            }
+        }
+        return c;
+    }
+    
+    
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int emp = this.getMayor();
+        Info in = new Info();
+        in.setT("Vendedor con Mayor Ingreso");
+        in.setData(this.employees[emp]);
+        in.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+    
+    
+    
+    
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int emp = this.getMayor();
+        Info in = new Info();
+        in.setT("Vendedor con Menor Ingreso");
+        in.setData(this.employees[emp]);
+        in.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    
+    public void ClearArr(){
+        for(int i = 0; i < this.employees.length; i++){
+            this.employees[i] = null;
+        }
+        this.count = 0;
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        model.setRowCount(0);
+    }
+    
+    
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        System.exit( 0 );
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
